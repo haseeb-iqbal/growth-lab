@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --lightGrey1: #fcfcfc;
+  --lightGrey2: #bebec2;
+  --lightGrey3: #f5f5f5;
+
+  --text-secondary: royalblue;
+  --accent: purple;
+}

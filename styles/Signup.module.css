@@ -1,0 +1,47 @@
+.container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.switchContainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+.switchButton {
+  margin: 10px;
+  max-height: 40px;
+  border-color: var(--lightGrey2);
+  border-radius: 20px;
+}
+.mainContainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.numberInput {
+  width: 90vw;
+  max-width: 300px;
+}
+
+.conditionsText {
+  text-align: center;
+  font-size: 12px;
+}
+.line {
+  width: 90vw;
+  max-width: 300px;
+}
+
+.nearText {
+  text-align: center;
+}
+.nearButton {
+  display: flex;
+  justify-content: center;
+}
