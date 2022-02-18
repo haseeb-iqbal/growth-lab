@@ -7,11 +7,31 @@ import { useState } from "react";
 
 const Signup: NextPage = () => {
   const [isPhone, setIsPhone] = useState(false);
+  const validate = (values: any) => {
+    const errors: any = {};
+    if (isPhone) {
+      if (!values.phone) {
+        errors.phone = "Required";
+      } else if (!/^[0-9]{7,10}$/i.test(values.phone)) {
+        errors.phone = "Invalid phone number";
+      }
+    } else {
+      if (!values.email) {
+        errors.email = "Required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+      ) {
+        errors.email = "Invalid email address";
+      }
+    }
+    return errors;
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
       phone: "",
     },
+    validate,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -48,6 +68,8 @@ const Signup: NextPage = () => {
                 type="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
+                error={formik.errors.email ? true : false}
+                helperText={formik.errors.email ? formik.errors.email : ""}
               ></TextField>
             )}
             {isPhone && (
@@ -59,6 +81,8 @@ const Signup: NextPage = () => {
                 name="phone"
                 onChange={formik.handleChange}
                 value={formik.values.phone}
+                error={formik.errors.phone ? true : false}
+                helperText={formik.errors.phone ? formik.errors.phone : ""}
               ></TextField>
             )}
           </div>
