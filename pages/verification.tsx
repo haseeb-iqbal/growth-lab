@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-const Signup: NextPage = () => {
+const Verification: NextPage = () => {
   const [isPhone, setIsPhone] = useState(false);
   const validate = (values: any) => {
     const errors: any = {};
@@ -39,17 +39,10 @@ const Signup: NextPage = () => {
   });
   return (
     <div>
-      <SignupHeader>HomePage</SignupHeader>
+      <SignupHeader>Verification</SignupHeader>
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.container}>
           <div className={styles.switchContainer}>
-            <Button
-              variant={isPhone ? "text" : "outlined"}
-              className={styles.switchButton}
-              onClick={() => setIsPhone(false)}
-            >
-              Email
-            </Button>
             <Button
               variant={isPhone ? "outlined" : "text"}
               className={styles.switchButton}
@@ -113,4 +106,5 @@ const Signup: NextPage = () => {
     </div>
   );
 };
-export default Signup;
+
+export default Verification;
