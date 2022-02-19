@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 const Signup: NextPage = () => {
+  const router = useRouter();
+
   const [isPhone, setIsPhone] = useState(false);
   const validate = (values: any) => {
     const errors: any = {};
@@ -34,12 +36,19 @@ const Signup: NextPage = () => {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("verificationMethod", isPhone ? "phone" : "email");
+        localStorage.setItem("phoneVerification", values.phone);
+        localStorage.setItem("emailVerification", values.email);
+      }
+      router.push("/verification");
     },
   });
   return (
     <div>
-      <SignupHeader>HomePage</SignupHeader>
+      <SignupHeader>
+        <b>HomePage</b>
+      </SignupHeader>
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.container}>
           <div className={styles.switchContainer}>
@@ -89,8 +98,19 @@ const Signup: NextPage = () => {
           </div>
           <div className={styles.mainContainer}>
             <Button
-              className={styles.numberInput}
-              variant="outlined"
+              sx={{
+                backgroundColor:
+                  (!formik.errors.phone &&
+                    isPhone &&
+                    formik.values.phone != "") ||
+                  (!formik.errors.email &&
+                    !isPhone &&
+                    formik.values.email != "")
+                    ? "#885fff"
+                    : "#BEBEC2",
+                "border-radius": "10px",
+              }}
+              variant="contained"
               type="submit"
             >
               Continue
@@ -100,13 +120,19 @@ const Signup: NextPage = () => {
             <p>
               by clicking continue you must agree to near labs
               <br />
-              <a>Terms & Conditions</a> and <a>Privacy Policy</a>
+              <a className={styles.linkText}>Terms & Conditions</a> and{" "}
+              <a className={styles.linkText}>Privacy Policy</a>
             </p>
           </div>
           <hr className={styles.line} />
           <div className={styles.nearText}>Already have NEAR account?</div>
           <div className={styles.nearButton}>
-            <Button variant="contained">Log in with NEAR</Button>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#414047", "border-radius": "10px" }}
+            >
+              Log in with NEAR
+            </Button>
           </div>
         </div>
       </form>

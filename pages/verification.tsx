@@ -1,36 +1,32 @@
-import { Button, TextField } from "@mui/material";
 import type { NextPage } from "next";
 import SignupHeader from "../components/signupHeader";
-import styles from "../styles/Signup.module.css";
+import styles from "../styles/Verification.module.css";
 import { useFormik } from "formik";
+import ReactCodeInput from "react-verification-code-input";
+import { Button } from "@mui/material";
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 const Verification: NextPage = () => {
-  const [isPhone, setIsPhone] = useState(false);
+  const [isInputComplete, setInputComplete] = useState(false);
+
+  var isPhone: boolean = false;
+  var verificationValue: string | null = "";
+  if (typeof window !== "undefined") {
+    isPhone = localStorage.getItem("verificationMethod") == "phone";
+    if (isPhone) {
+      verificationValue = localStorage.getItem("phoneVerification");
+    } else {
+      verificationValue = localStorage.getItem("emailVerification");
+    }
+  }
+
   const validate = (values: any) => {
     const errors: any = {};
-    if (isPhone) {
-      if (!values.phone) {
-        errors.phone = "Required";
-      } else if (!/^[0-9]{7,10}$/i.test(values.phone)) {
-        errors.phone = "Invalid phone number";
-      }
-    } else {
-      if (!values.email) {
-        errors.email = "Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-    }
     return errors;
   };
   const formik = useFormik({
     initialValues: {
-      email: "",
-      phone: "",
+      verificationCode: "",
     },
     validate,
     onSubmit: (values) => {
@@ -39,68 +35,43 @@ const Verification: NextPage = () => {
   });
   return (
     <div>
-      <SignupHeader>Verification</SignupHeader>
+      <SignupHeader>
+        <b>Verification</b>
+      </SignupHeader>
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.container}>
-          <div className={styles.switchContainer}>
-            <Button
-              variant={isPhone ? "outlined" : "text"}
-              className={styles.switchButton}
-              onClick={() => setIsPhone(true)}
-            >
-              Phone
-            </Button>
-          </div>
-          <div className={styles.mainContainer}>
-            {!isPhone && (
-              <TextField
-                className={styles.numberInput}
-                placeholder="johndoe@gmail.com"
-                variant="outlined"
-                id="email"
-                name="email"
-                type="email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                error={formik.errors.email ? true : false}
-                helperText={formik.errors.email ? formik.errors.email : ""}
-              ></TextField>
-            )}
-            {isPhone && (
-              <TextField
-                className={styles.numberInput}
-                placeholder="Ex (337) 378 8383"
-                variant="outlined"
-                id="phone"
-                name="phone"
-                onChange={formik.handleChange}
-                value={formik.values.phone}
-                error={formik.errors.phone ? true : false}
-                helperText={formik.errors.phone ? formik.errors.phone : ""}
-              ></TextField>
-            )}
-          </div>
-          <div className={styles.mainContainer}>
-            <Button
-              className={styles.numberInput}
-              variant="outlined"
-              type="submit"
-            >
-              Continue
-            </Button>
-          </div>
-          <div className={styles.conditionsText}>
-            <p>
-              by clicking continue you must agree to near labs
-              <br />
-              <a>Terms & Conditions</a> and <a>Privacy Policy</a>
+          {isPhone && (
+            <p className={styles.verificationText}>
+              We've sent a 6 digit verification code to your phone
             </p>
+          )}
+          {!isPhone && (
+            <p className={styles.verificationText}>
+              We've sent a 6 digit verification code to the email address
+            </p>
+          )}
+
+          <p className={styles.verificationValueText}>{verificationValue}</p>
+
+          <p className={styles.EnterCodeText}>Enter Verification Code</p>
+          <div className={styles.inputRectangleContainer}>
+            <ReactCodeInput onComplete={() => setInputComplete(true)} />
           </div>
+
+          <Button
+            variant="contained"
+            className={styles.button}
+            sx={{
+              backgroundColor: isInputComplete ? "#885fff" : "#BEBEC2",
+              margin: "20px",
+            }}
+          >
+            Continue
+          </Button>
           <hr className={styles.line} />
-          <div className={styles.nearText}>Already have NEAR account?</div>
-          <div className={styles.nearButton}>
-            <Button variant="contained">Log in with NEAR</Button>
-          </div>
+          <p>Didn't recieve your code?</p>
+          <p className={styles.linkText}>Send to a different email address</p>
+          <p className={styles.linkText}>resend your code</p>
         </div>
       </form>
     </div>

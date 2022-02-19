@@ -3,7 +3,6 @@
   height: 100px;
   /* color: red; */
   background-color: var(--lightGrey3);
-  color: var(--accent);
   border-bottom: 1px solid black;
   display: flex;
   align-items: center;

@@ -14,8 +14,9 @@
 .switchButton {
   margin: 10px;
   max-height: 40px;
-  border-color: var(--lightGrey2);
-  border-radius: 20px;
+  border-color: #bebec2;
+  border-radius: 10px;
+  color: #414047;
 }
 .mainContainer {
   width: 100vw;
@@ -39,9 +40,15 @@
 }
 
 .nearText {
+  margin: 20px;
   text-align: center;
 }
 .nearButton {
   display: flex;
   justify-content: center;
+}
+
+.linkText {
+  color: #587be0;
+  cursor: pointer;
 }
