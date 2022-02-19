@@ -47,7 +47,10 @@ const Signup: NextPage = () => {
   return (
     <div>
       <SignupHeader>
-        <b>HomePage</b>
+        <img src="logo.PNG" className={styles.icon}></img>
+        <b className={styles.HeaderText}>
+          <span className={styles.HeaderColorText}> Home</span>Page
+        </b>
       </SignupHeader>
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.container}>

@@ -28,6 +28,8 @@
 .numberInput {
   width: 90vw;
   max-width: 300px;
+  border: 1px solid #bebec2;
+  border-radius: 8px;
 }
 
 .conditionsText {
@@ -51,4 +53,16 @@
 .linkText {
   color: #587be0;
   cursor: pointer;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.HeaderText {
+  font-size: 25px;
+}
+
+.HeaderColorText {
+  color: #b072ff;
 }
